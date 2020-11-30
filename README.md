@@ -6,7 +6,7 @@
 
 ### k-means
 
-k-means算法的实现参考了这篇日语的[https://qiita.com/kenmatsu4/items/59ea3e5dfa3d4c161efb](Qiita博客)
+k-means算法的实现参考了这篇日语的[Qiita博客](https://qiita.com/kenmatsu4/items/59ea3e5dfa3d4c161efb)
 
 ### EM
 
