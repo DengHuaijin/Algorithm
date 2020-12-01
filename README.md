@@ -9,7 +9,7 @@
 
 ### k-means
 
-[讲解+推导]()
+[讲解+推导](https://blog.csdn.net/dhj_tsukuba/article/details/110392431//blog.csdn.net/dhj_tsukuba/article/details/110392431)
 
 ### EM
 
@@ -22,5 +22,4 @@
 ### QuickSort
 
 ### Top-k
-
 
