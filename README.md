@@ -17,7 +17,7 @@
 
 ### SVM
 
-[讲解+推导]()
+[讲解+推导](https://blog.csdn.net/dhj_tsukuba/article/details/111471830)
 
 ### BP
 
