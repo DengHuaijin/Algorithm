@@ -21,7 +21,7 @@
 
 ### PCA
 
-[讲解+推导](https://blog.csdn.net/dhj_tsukuba/article/details/111471830)
+[讲解+推导](https://blog.csdn.net/dhj_tsukuba/article/details/111598103)
 
 ### BP
 
