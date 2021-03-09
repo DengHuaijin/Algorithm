@@ -27,7 +27,11 @@
 
 ## 数据结构
 
-### QuickSort
+### Sort
+
+将常见的几种排序算法进行时间空间复杂度的比较：
+
+quickSort, bubbleSort，...
 
 ### Top-k
 
