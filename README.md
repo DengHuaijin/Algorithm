@@ -31,7 +31,7 @@
 
 将常见的几种排序算法进行时间空间复杂度的比较：
 
-quickSort, bubbleSort，...
+quickSort, bubbleSort，insertSort, selectSort
 
 ### Top-k
 

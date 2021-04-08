@@ -42,8 +42,10 @@ if __name__ == "__main__":
         y4.append(end-start)
     
     plt.figure()
-    plt.plot(x1, y1, color = "r", label = "quickSort")
-    plt.plot(x2, y2, color = "g", label = "bubbleSort")
+    plt.plot(x1, y1, color = "r", label = "quicksort")
+    plt.plot(x2, y2, color = "g", label = "bubblesort")
+    plt.plot(x3, y3, color = "g", label = "bubblesort")
+    plt.plot(x4, y4, color = "g", label = "bubblesort")
     plt.legend(loc = "upper right")
 
     plt.savefig("./time.png")
