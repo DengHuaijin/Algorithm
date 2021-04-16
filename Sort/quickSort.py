@@ -15,11 +15,11 @@ def quickSort(s):
             right.append(s[i])
         else:
             pivotCount += 1
-    
+
     left = quickSort(left)
     right = quickSort(right)
 
-    return left + [pivot] * pivotCount + right
+    return left + pivotCount * [pivot] + right
 
 if __name__ == "__main__":
     

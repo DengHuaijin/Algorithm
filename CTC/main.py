@@ -1,21 +1,10 @@
 from __future__ import absolute_import, print_function, division
-from __future__ import literal_unicode
 
 import BestPath
 import BeamSearch
 import Loss
 import numpy as np
-
-def softmax(mat):
-    T, H = mat.shape
-    res = np.zeros(mat.shape)
-    for t in range(T):
-        y = mat[t, :]
-        res[t, :] = np.exp(y) / np.sum(np.exp(y))
-    return res
-
-def loadNNOutput(fn):
-    return np.genfromtxt(fn, delimiter = ';')[:, : -1]
+from Common import softmax, loadNNOutput
 
 def wordRecognition():
 
