@@ -1,5 +1,6 @@
+import math
 import numpy as np
-from Common import softmax, loadNNOutput
+from Common import softmax, loadNNOutput, parser
 
 def multiply(nums: list):
     res = 1
@@ -7,19 +8,23 @@ def multiply(nums: list):
         res *= i
     return res
 
-def ctcRegularBeamSearch(mat, chars):
-    BW = 4
-    beams = []
-    bestBeams = [[] * BW]
-    T, _ = mat.shape()
+def ctcRegularBeamSearch(mat, chars, beam):
+    # sequences 存储最优的beam个序列
+    sequences = [[[], 0.0]]
+    T, _ = mat.shape
 
     for t in range(T):
-        beams = sorted(beams, key = lambda x: multiply(x))
-        for i in range(BW):
-            bestBeams[i] = beams[i]
-        beams = []
-        for b in bestBeams:
-
+        all_candidates = []
+        for i in range(len(sequences)):
+            # 基于每条最优path进行扩展
+            seq, score = sequences[i]
+            for j in range(len(mat[0])):
+                # 遍历当前帧每一个token
+                candidate = [seq + [j], score - math.log(mat[t][j])]
+                all_candidates.append(candidate)
+        ordered = sorted(all_candidates, key = lambda x: x[1])
+        sequences = ordered[:beam]
+    return sequences
 
 def test():
     
@@ -27,7 +32,9 @@ def test():
     mat = softmax(loadNNOutput("data/rnnOutput_word.csv"))
     print("All tokens: {}".format(len(chars)))
     print("rnn output: {}".format(mat.shape))
-    ctcRegularBeamSearch(mat, chars)
+    sequences = ctcRegularBeamSearch(mat, chars, 4)
+    for seq in sequences:
+        print(parser(seq[0], chars))
 
 if __name__ == "__main__":
     test()

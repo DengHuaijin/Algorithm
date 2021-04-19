@@ -22,3 +22,14 @@ def extendByBlanks(seq, b):
 def wordToLabelSeq(words, classes):
     res = [classes.index(i) for i in words]
     return res
+
+def parser(sequence, chars):
+    res = ""
+    sequence = list(set(sequence))
+    low = 0
+    for fast in range(len(sequence)):
+        if sequence[fast] != len(chars):
+            sequence[low] = sequence[fast]
+            low += 1
+    sequence = sequence[:low]
+    return "".join(list(map(lambda x:chars[x], sequence)))

@@ -25,9 +25,14 @@
 
 ### CTC
 
-DFS+DP 计算损失函数
+计算损失函数:
+- 动态规划+DFS
 
-合并alignment的beam search 求最佳解码路径
+求最优解码路径：
+
+- 贪婪解码，也就是best path
+- 常规beam search 
+- 合并alignment的beam search
 
 ## 数据结构
 
