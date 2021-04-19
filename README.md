@@ -26,6 +26,7 @@
 ### CTC
 
 DFS+DP 计算损失函数
+
 合并alignment的beam search 求最佳解码路径
 
 ## 数据结构
