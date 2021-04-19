@@ -3,7 +3,7 @@
 
 ## 统计学习方法
 
-其中详细的说明和推导可以参考我的CSDN博客，下面附有链接，主要是因为这里面写公式比较麻烦
+其中详细的说明和推导可以参考我的CSDN博客，下面附有链接
 
 ### Viterbi
 
@@ -25,6 +25,9 @@
 
 ### CTC
 
+DFS+DP 计算损失函数
+合并alignment的beam search 求最佳解码路径
+
 ## 数据结构
 
 ### Sort
@@ -35,4 +38,4 @@ quickSort, bubbleSort，insertSort, selectSort
 
 ### 二叉树
 
-[二叉树序列化与反序列化总结](https://blog.csdn.net/dhj_tsukuba/article/details/115582163)
+[二叉树序各种遍历以及列化与反序列化总结](https://blog.csdn.net/dhj_tsukuba/article/details/115582163)
