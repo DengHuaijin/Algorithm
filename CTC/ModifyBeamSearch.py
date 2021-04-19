@@ -1,6 +1,8 @@
 from __future__ import absolute_import, print_function, division
 
 import numpy as np
+import BestPath
+from Common import loadNNOutput, softmax
 
 class BeamEntry:
     def __init__(self):
@@ -89,19 +91,21 @@ def ctcBeamSearch(mat, chars, lm, beamWidth = 25):
     bestLabeling = last.sort()[0]
     bestChars = ""
     print(bestLabelings)
-    for i in bestLabelings:
+    
+    for i in bestLabelings[0]:
         bestChars += chars[i]
 
     return bestChars
 
 def testBeamSearch():
 
-    chars = "ab"
-    mat = np.array([[0.4, 0, 0.6], [0.4, 0, 0.6]])
-    expected = "a"
-    pred = ctcBeamSearch(mat, chars, None)
-    print(pred)
-    print("OK" if pred == expected else "ERROR")
+    chars = ' !"#&\'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    mat = softmax(loadNNOutput("data/rnnOutput.csv"))
+
+    ground_truth = "aircraft"
+    print("TARGET : ", ground_truth)
+    print("BEST_PATH: ", BestPath.ctcBestPath(mat, chars))
+    print("BEAM SEARCH: ", ctcBeamSearch(mat, chars, None))
 
 if __name__ == "__main__":
     testBeamSearch()

@@ -23,7 +23,7 @@
 
 [讲解+推导](https://blog.csdn.net/dhj_tsukuba/article/details/111598103)
 
-### BP
+### CTC
 
 ## 数据结构
 
@@ -33,7 +33,6 @@
 
 quickSort, bubbleSort，insertSort, selectSort
 
-### Top-k
+### 二叉树
 
-### 二叉树的子结构
-
+[二叉树序列化与反序列化总结](https://blog.csdn.net/dhj_tsukuba/article/details/115582163)
