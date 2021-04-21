@@ -29,7 +29,7 @@ def ctcRegularBeamSearch(mat, chars, beam):
 def test():
     
     chars = ' !"#&\'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    mat = softmax(loadNNOutput("data/rnnOutput_word.csv"))
+    mat = softmax(loadNNOutput("data/rnnOutput_sentence.csv"))
     print("All tokens: {}".format(len(chars)))
     print("rnn output: {}".format(mat.shape))
     sequences = ctcRegularBeamSearch(mat, chars, 4)

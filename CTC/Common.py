@@ -25,11 +25,12 @@ def wordToLabelSeq(words, classes):
 
 def parser(sequence, chars):
     res = ""
-    sequence = list(set(sequence))
-    low = 0
-    for fast in range(len(sequence)):
-        if sequence[fast] != len(chars):
-            sequence[low] = sequence[fast]
-            low += 1
-    sequence = sequence[:low]
-    return "".join(list(map(lambda x:chars[x], sequence)))
+    i = 0
+    tmp = [sequence[0]]
+    for i in range(1, len(sequence)):
+        if sequence[i] != sequence[i-1]:
+            tmp.append(sequence[i])
+    for i in tmp:
+        if i != len(chars):
+            res += chars[i]
+    return res

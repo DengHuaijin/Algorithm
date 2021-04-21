@@ -1,6 +1,7 @@
 from __future__ import absolute_import, print_function, division
 
 import numpy as np
+import languageModel
 from Common import loadNNOutput, softmax, parser
 
 class BeamEntry:
@@ -8,6 +9,9 @@ class BeamEntry:
         self.probTotal = 0
         self.probNonBlank = 0
         self.probBlank = 0
+        # 加入语言分数
+        self.probLM = 1
+        self.flagLM = False
         self.labeling = ()
 
 class BeamState:
@@ -17,6 +21,14 @@ class BeamState:
         字典的key是labeling序列，item是BeamEntry()
         """
         self.entries = {}
+        
+    def norm(self):
+        """
+        对语言分数做归一化
+        """
+        for (k, _) in self.entries.items():
+            length = len(self.entries[k].labeling)
+            self.entries[k].probLM = self.entries[k].probLM ** (1.0 / (length if length else 0.0))
 
     def sort(self):
         beams = [v for (_, v) in self.entries.items()]
@@ -24,8 +36,17 @@ class BeamState:
         对所有BeamEntry按照probTotal进行排序
         最后只返回labeling
         """
-        sortedBeams = sorted(beams, reverse = True, key = lambda x: x.probTotal)
+        sortedBeams = sorted(beams, reverse = True, key = lambda x: x.probTotal * x.probLM)
         return [x.labeling for x in sortedBeams]
+
+def applyLM(prebeam, curbeam, chars, lm):
+    if lm and not curbeam.flagLM:
+        c1 = chars[prebeam.labeling[-1] if prebeam.labeling else chars.index(" ")]
+        c2 = chars[curbeam.labeling[-1]]
+        factor = 0.01
+        bigramProb = lm.getCharBigram(c1, c2) ** factor
+        curbeam.probLM = prebeam.probLM * bigramProb
+        curbeam.flagLM = True
 
 def addBeam(beamState, labeling):
     if labeling not in beamState.entries:
@@ -50,7 +71,7 @@ def ctcBeamSearch(mat, chars, lm, beamWidth = 25):
 
     for t in range(T):
         curr = BeamState()
-
+        
         bestLabelings = last.sort()[0:beamWidth]
         for labeling in bestLabelings:
             probNonBlank = 0
@@ -79,6 +100,9 @@ def ctcBeamSearch(mat, chars, lm, beamWidth = 25):
             curr.entries[labeling].probNonBlank += probNonBlank
             curr.entries[labeling].probBlank += probBlank
             curr.entries[labeling].probTotal = probNonBlank + probBlank
+            # 相同的label序列 LM分数也相同
+            curr.entries[labeling].probLM = last.entries[labeling].probLM
+            curr.entries[labeling].flagLM = True
             
             # 遍历当前帧所有token，对其中一条序列进行扩展 
             for c in range(H-1):
@@ -95,8 +119,11 @@ def ctcBeamSearch(mat, chars, lm, beamWidth = 25):
                 curr.entries[newLabeling].probNonBlank += probNonBlank
                 curr.entries[newLabeling].probTotal += probNonBlank
 
-        last = curr
+                applyLM(curr.entries[labeling], curr.entries[newLabeling], chars, lm)
 
+        last = curr
+    
+    last.norm()
     bestLabeling = last.sort()[0]
     return "".join(list(map(lambda x:chars[x], bestLabeling)))
 
@@ -104,8 +131,10 @@ def testBeamSearch():
 
     chars = ' !"#&\'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
     mat = softmax(loadNNOutput("data/rnnOutput_sentence.csv"))
-    ground_truth = "aircraft"
-    print("BEAM SEARCH: ", ctcBeamSearch(mat, chars, None))
+    label_word = "aircraft"
+    label_sentence = "the fake friend of the family, like the"
+    lm = languageModel.languageModel("data/corpus.txt", chars)
+    print("BEAM SEARCH with LM: ", ctcBeamSearch(mat, chars, lm))
 
 if __name__ == "__main__":
     testBeamSearch()

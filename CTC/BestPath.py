@@ -18,10 +18,13 @@ def ctcBestPath(mat, chars):
 def testBestPath():
 
     chars = ' !"#&\'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-    mat = softmax(loadNNOutput("data/rnnOutput_word.csv"))
+    mat_word = softmax(loadNNOutput("data/rnnOutput_word.csv"))
+    mat_sentence = softmax(loadNNOutput("data/rnnOutput_sentence.csv"))
     print("All tokens: {}".format(len(chars)))
-    print("rnn output: {}".format(mat.shape))
-    print(ctcBestPath(mat, chars))
+    print("word rnn output: {}".format(mat_word.shape))
+    print("sentence rnn output: {}".format(mat_sentence.shape))
+    print("word best path: ", ctcBestPath(mat_word, chars))
+    print("sentence best path: ", ctcBestPath(mat_sentence, chars))
 
 if __name__ == "__main__":
     testBestPath()
