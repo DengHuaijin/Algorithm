@@ -25,6 +25,8 @@
 
 ### CTC
 
+[讲解](https://blog.csdn.net/dhj_tsukuba/article/details/115964287)
+
 计算损失函数:
 - 动态规划+DFS
 
