@@ -37,6 +37,18 @@
 - 合并alignment的beam search
 - 加入bigram语言模型的beam search
 
+## 语音特征提取
+
+### pitch
+
+利用librosa库提取pitch
+
+不需要额外import,实现自相关算法提取pitch
+
+### power
+
+### MFCC
+
 ## 数据结构
 
 ### Sort
